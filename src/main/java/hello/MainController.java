@@ -1,5 +1,7 @@
 package hello;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,6 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import hello.User;
 import hello.UserRepository;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller    // This means that this class is a Controller
 
@@ -32,38 +39,42 @@ public class MainController {
 
 	@PostMapping(path="/add")
 	public String addNewUser (@RequestParam String name
-			, @RequestParam String email, @RequestParam String password) {
+			, @RequestParam String email, @RequestParam String password,HttpServletRequest request,Model model) {
+		HttpSession session=request.getSession(true);
 		User user=new User();
 		user.setName(name);
 		user.setEmail(email);
 		user.setPassword(password);
+		user.setRemain(100);
 		userRepository.save(user);
-
-		log.info(user.toString()+" saved to the repo");
+		session.setAttribute("currentUser",user);
+		model.addAttribute("currentUser",user);
 		return "main";
 	}
 
 	@PostMapping(path = "/login")
-	public String login(@RequestParam String email, @RequestParam String password, Model model) {
+	public String login(@RequestParam String email, @RequestParam String password, HttpServletResponse response, HttpServletRequest request,Model model)throws IOException {
 		List<User> users = userRepository.findByEmail(email);
-		if (users == null) {
-			log.info("attempting to log in with the non-existed account");
-			return "该用户不存在";
-		} else {
-			User user = users.get(0);
-			if (user.getPassword().equals(password)) {
-				// 如果密码与邮箱配对成功:
-				model.addAttribute("name", user.getName());
-				log.info(user.toString()+ " logged in");
-			} else {
-				// 如果密码与邮箱不匹配:
-				model.addAttribute("name", "logging failed");
-				log.info(user.toString()+ " failed to log in");
-			}
+		HttpSession session=request.getSession(true);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		if (users == null||users.size()<=0) {
+			out.print("<script>alert('该用户不存在')</script>");
 			return "index";
 		}
+		else {
+			User user = users.get(0);
+			if (user.getPassword().equals(password)) {
+				session.setAttribute("currentUser",user);
+				model.addAttribute("currentUser",user);
+				log.info(user.toString()+ " logged in");
+				return "main";
+			} else {
+				out.print("<script>alert('密码错误')</script>");
+				return "index";
+			}
+		}
 	}
-
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<User> getAllUsers() {
 		return userRepository.findAll();
