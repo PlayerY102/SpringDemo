@@ -10,8 +10,8 @@ public class Friend {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
-    private User userA;
-    private User userB;
+    private Integer userA;
+    private Integer userB;
 
     @Override
     public String toString() {
@@ -30,19 +30,19 @@ public class Friend {
         this.id = id;
     }
 
-    public User getUserA() {
+    public Integer getUserA() {
         return userA;
     }
 
-    public void setUserA(User userA) {
+    public void setUserA(Integer userA) {
         this.userA = userA;
     }
 
-    public User getUserB() {
+    public Integer getUserB() {
         return userB;
     }
 
-    public void setUserB(User userB) {
+    public void setUserB(Integer userB) {
         this.userB = userB;
     }
 }

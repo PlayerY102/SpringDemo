@@ -11,8 +11,8 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
-    private User userFrom;
-    private User userTo;
+    private Integer userFrom;
+    private Integer userTo;
     private Integer amount;
     private Calendar time;
 
@@ -35,19 +35,19 @@ public class Transaction {
         this.id = id;
     }
 
-    public User getUserFrom() {
+    public Integer getUserFrom() {
         return userFrom;
     }
 
-    public void setUserFrom(User userFrom) {
+    public void setUserFrom(Integer userFrom) {
         this.userFrom = userFrom;
     }
 
-    public User getUserTo() {
+    public Integer getUserTo() {
         return userTo;
     }
 
-    public void setUserTo(User userTo) {
+    public void setUserTo(Integer userTo) {
         this.userTo = userTo;
     }
 

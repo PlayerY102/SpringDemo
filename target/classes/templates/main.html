@@ -76,10 +76,9 @@
 				 <!--first-one-->
 				 <div class="col-md-4 first-one">
 				  <div class="first-one-inner">
-				     <h3 class="tittle">Sign in</h3>
-					<form>
-						<input name="email" type="text" class="text" value="E-mail address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';}" >
-						<input name="password" type="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+				     <h3 class="tittle">Add Friend</h3>
+					<form  action="/addFriend" method="post">
+						<input name="friendEmail" type="text" class="text" value="E-mail address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';}" >
 						<div class="submit"><input type="submit" onclick="myFunction()" value="Sign in" ></div>
 						<div class="clearfix"></div>
 						<div class="new">

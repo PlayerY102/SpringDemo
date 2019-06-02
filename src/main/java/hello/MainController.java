@@ -27,9 +27,10 @@ public class MainController {
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
-	private FriendRepository friendRepository;
-	@Autowired
 	private TransactionRepository transactionRepository;
+	@Autowired
+	private FriendRepository friendRepository;
+
 
 	@GetMapping("/")
 	public String showBegin() {
@@ -99,8 +100,8 @@ public class MainController {
 		}
 		User userB = users.get(0);
 		Friend friend=new Friend();
-		friend.setUserA(userA);
-		friend.setUserB(userB);
+		friend.setUserA(userA.getId());
+		friend.setUserB(userB.getId());
 		friendRepository.save(friend);
 
 		return "updateMain";
@@ -126,8 +127,8 @@ public class MainController {
 		User userTo=users.get(0);
 		Transaction transaction=new Transaction();
 		transaction.setAmount(amount);
-		transaction.setUserFrom(userFrom);
-		transaction.setUserTo(userTo);
+		transaction.setUserFrom(userFrom.getId());
+		transaction.setUserTo(userTo.getId());
 		transaction.setTime(Calendar.getInstance());
 		transactionRepository.save(transaction);
 		userFrom.setRemain(userFrom.getRemain()-amount);
@@ -138,9 +139,10 @@ public class MainController {
 		return "updateMain";
 	}
 
-	@GetMapping(path="updateMain")
+	@RequestMapping(path="updateMain")
 	public String updateMain( Model model,HttpServletResponse response,HttpServletRequest request)throws IOException{
 
+		log.info("into updateMain");
 		HttpSession session=request.getSession();
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -151,11 +153,11 @@ public class MainController {
 			return "index";
 		}
 		model.addAttribute("currentUser",currentUser);
-		List<Friend> myFriends=friendRepository.findByUserA(currentUser);
+		List<Friend> myFriends=friendRepository.findByUserA(currentUser.getId());
 		model.addAttribute("myFriends",myFriends);
 
-		List<Transaction> transactionsFrom=transactionRepository.findByUserFrom(currentUser);
-		List<Transaction> transactionsTo=transactionRepository.findByUserTo(currentUser);
+		List<Transaction> transactionsFrom=transactionRepository.findByUserFrom(currentUser.getId());
+		List<Transaction> transactionsTo=transactionRepository.findByUserTo(currentUser.getId());
 		model.addAttribute("transactionsFrom",transactionsFrom);
 		model.addAttribute("transactionsTo",transactionsTo);
 
