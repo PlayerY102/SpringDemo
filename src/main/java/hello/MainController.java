@@ -2,6 +2,7 @@ package hello;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +33,8 @@ public class MainController {
 	private TransactionRepository transactionRepository;
 	@Autowired
 	private FriendRepository friendRepository;
-
+	@Autowired
+	private MessageRepository messageRepository;
 
 	@GetMapping("/")
 	public String showBegin() {
@@ -163,8 +165,8 @@ public class MainController {
 			return "login";
 		}
 		model.addAttribute("currentUser",currentUser);
-		List<Friend> myFriends=friendRepository.findByUserA(currentUser.getId());
-		List<Integer> myFriendsInteger=myFriends.stream().map(Friend::getId).collect(Collectors.toList());
+		List<Friend> friends=friendRepository.findByUserA(currentUser.getId());
+		List<Integer> myFriendsInteger=friends.stream().map(Friend::getUserB).collect(Collectors.toList());
 		List<User> myFriendsList=userRepository.findByIdIn(myFriendsInteger);
 		model.addAttribute("myFriends",myFriendsList);
 
@@ -172,7 +174,20 @@ public class MainController {
 		List<Transaction> transactionsTo=transactionRepository.findByUserTo(currentUser.getId());
 		transactionsFrom.addAll(transactionsTo);
 		Collections.sort(transactionsFrom);
-		model.addAttribute("transactions",transactionsFrom);
+		List<TransactionSend> transactionSends=new ArrayList<>();
+		for(Transaction i:transactionsFrom){
+			TransactionSend temp=new TransactionSend(i,userRepository);
+			transactionSends.add(temp);
+		}
+		model.addAttribute("transactions",transactionSends);
+
+		List<Message> messages=messageRepository.findByUserTo(currentUser.getId());
+		List<MessageSend> messageSends=new ArrayList<>();
+		for(Message i:messages){
+			MessageSend temp=new MessageSend(i,userRepository);
+			messageSends.add(temp);
+		}
+		model.addAttribute("messages",messageSends);
 
 		return "dashboard";
 	}
