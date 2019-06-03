@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.Calendar;
 
 @Entity
-public class Transaction {
+public class Transaction implements Comparable<Transaction>{
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
@@ -65,5 +65,10 @@ public class Transaction {
 
     public void setTime(Calendar time) {
         this.time = time;
+    }
+
+    @Override
+    public int compareTo(Transaction o) {
+        return this.getTime().compareTo(o.getTime());
     }
 }

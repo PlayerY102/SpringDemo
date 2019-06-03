@@ -3,6 +3,7 @@ package hello;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,7 @@ public class MainController {
 
 	@GetMapping("/")
 	public String showBegin() {
-		return "index";
+		return "login";
 	}
 
 	@GetMapping("/register")
@@ -44,43 +45,51 @@ public class MainController {
 	}
 
 	@PostMapping(path="/add")
-	public String addNewUser (@RequestParam String name
+	@ResponseBody
+	public Object addNewUser (@RequestParam String name
 			, @RequestParam String email, @RequestParam String password,HttpServletRequest request,Model model) {
 
 		HttpSession session=request.getSession();
 
+		List<User> list=userRepository.findByEmail(email);
+		if(list!=null&&list.size()>0){
+			return "1";
+		}
 		User user=new User();
 		user.setName(name);
 		user.setEmail(email);
 		user.setPassword(password);
 		user.setRemain(100);
+
 		userRepository.save(user);
 
 		session.setAttribute("currentUser",user);
-		return "updateMain";
+		return "0";
 	}
 
 	@PostMapping(path = "/login")
-	public String login(@RequestParam String email, @RequestParam String password, HttpServletResponse response, HttpServletRequest request,Model model)throws IOException {
+	@ResponseBody
+	public Object login(@RequestParam String email, @RequestParam String password, HttpServletResponse response, HttpServletRequest request,Model model)throws IOException {
 
+		log.info(email+" "+password);
 		HttpSession session=request.getSession();
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
+		//response.setContentType("text/html;charset=utf-8");
+		//PrintWriter out = response.getWriter();
 
 		List<User> users = userRepository.findByEmail(email);
 
 		if (users == null||users.size()<=0) {
-			out.print("<script>alert('该用户不存在')</script>");
-			return "index";
+			//out.print("<script>alert('该用户不存在')</script>");
+			return "1";
 		}
 		User user = users.get(0);
 		if (!user.getPassword().equals(password)) {
-			out.print("<script>alert('密码错误')</script>");
-			return "index";
+			//out.print("<script>alert('密码错误')</script>");
+			return "2";
 		}
 
 		session.setAttribute("currentUser",user);
-		return "updateMain";
+		return "0";
 	}
 
 	@PostMapping(path="/addFriend")
@@ -92,7 +101,7 @@ public class MainController {
 		User userA=(User)session.getAttribute("currentUser");
 		if(userA== null){
 			out.print("<script>alert('你还未登录')</script>");
-			return "index";
+			return "login";
 		}
 		List<User> users = userRepository.findByEmail(friendEmail);
 		if (users == null||users.size()<=0) {
@@ -118,7 +127,7 @@ public class MainController {
 		User userFrom=(User)session.getAttribute("currentUser");
 		if(userFrom== null){
 			out.print("<script>alert('你还未登录')</script>");
-			return "index";
+			return "login";
 		}
 		List<User> users = userRepository.findByEmail(friendEmail);
 		if (users == null||users.size()<=0) {
@@ -151,7 +160,7 @@ public class MainController {
 		User currentUser=(User)session.getAttribute("currentUser");
 		if(currentUser==null){
 			out.print("<script>alert('未登录')</script>");
-			return "index";
+			return "login";
 		}
 		model.addAttribute("currentUser",currentUser);
 		List<Friend> myFriends=friendRepository.findByUserA(currentUser.getId());
@@ -161,10 +170,11 @@ public class MainController {
 
 		List<Transaction> transactionsFrom=transactionRepository.findByUserFrom(currentUser.getId());
 		List<Transaction> transactionsTo=transactionRepository.findByUserTo(currentUser.getId());
-		model.addAttribute("transactionsFrom",transactionsFrom);
-		model.addAttribute("transactionsTo",transactionsTo);
+		transactionsFrom.addAll(transactionsTo);
+		Collections.sort(transactionsFrom);
+		model.addAttribute("transactions",transactionsFrom);
 
-		return "main";
+		return "dashboard";
 	}
 
 	@GetMapping(path="/all")
