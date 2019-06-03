@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,7 +97,7 @@ public class MainController {
 		List<User> users = userRepository.findByEmail(friendEmail);
 		if (users == null||users.size()<=0) {
 			out.print("<script>alert('该用户不存在')</script>");
-			return "main";
+			return "updateMain";
 		}
 		User userB = users.get(0);
 		Friend friend=new Friend();
@@ -122,7 +123,7 @@ public class MainController {
 		List<User> users = userRepository.findByEmail(friendEmail);
 		if (users == null||users.size()<=0) {
 			out.print("<script>alert('该用户不存在')</script>");
-			return "main";
+			return "updateMain";
 		}
 		User userTo=users.get(0);
 		Transaction transaction=new Transaction();
@@ -154,7 +155,9 @@ public class MainController {
 		}
 		model.addAttribute("currentUser",currentUser);
 		List<Friend> myFriends=friendRepository.findByUserA(currentUser.getId());
-		model.addAttribute("myFriends",myFriends);
+		List<Integer> myFriendsInteger=myFriends.stream().map(Friend::getId).collect(Collectors.toList());
+		List<User> myFriendsList=userRepository.findByIdIn(myFriendsInteger);
+		model.addAttribute("myFriends",myFriendsList);
 
 		List<Transaction> transactionsFrom=transactionRepository.findByUserFrom(currentUser.getId());
 		List<Transaction> transactionsTo=transactionRepository.findByUserTo(currentUser.getId());
