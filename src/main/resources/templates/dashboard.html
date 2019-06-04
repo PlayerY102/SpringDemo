@@ -705,14 +705,16 @@
         <div class="modal-body" style="padding:0">
             <div class="widget-im">
                 <ul>
-                    <li th:each="i:${messages}">
+                    <li th:each="i:${messages}" th:value="${i.id}">
                         <section class="thumbnail-in">
                             <div class="widget-im-tools tooltip-area pull-right">
                                 <span>
-                                    <i class="fa fa-paperclip"></i>
+                                    <a href="javascript:void(0)" class="im-accept" data-toggle="tooltip" title="Accept">
+                                       <i class="fa fa-reply-all"></i>
+                                    </a>
                                 </span>
                                 <span>
-                                    <i class="fa fa-reply-all"></i>
+                                    <i class="fa fa-paperclip"></i>
                                 </span>
                                 <span>
                                     <a href="javascript:void(0)" class="im-delete" data-toggle="tooltip" title="Delete">
@@ -739,7 +741,8 @@
                         </div>
                     </li>
                 </ul>
-                <button class="btn btn-inverse btn-block btn-lg" title="See More"><i class="fa fa-plus"></i></button>
+                <a class="btn btn-inverse btn-block btn-lg" data-toggle="modal" href="#md-add-event"><i
+                        class="fa fa-plus"></i></a>
             </div>
             <!-- //widget-im-->
         </div>
@@ -1011,13 +1014,13 @@
             <li data-counter-color="theme">
                 <span><i class="icon fa fa-smile-o"></i> Friends</span>
                 <ul>
-                        <li th:each="i:${myFriends}" class="img">
-                            <a href="#">
-                                <img alt="" src="assets/photos_preview/50/people/2.jpg"/>
-                                <strong th:text="${i.name}"></strong>
-                                <small th:text="${i.email}"></small>
-                            </a>
-                        </li>
+                    <li th:each="i:${myFriends}" class="img">
+                        <a href="#">
+                            <img alt="" src="assets/photos_preview/50/people/2.jpg"/>
+                            <strong th:text="${i.name}"></strong>
+                            <small th:text="${i.email}"></small>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li>
@@ -1270,6 +1273,38 @@
     </nav>
     <!-- //nav right menu-->
 
+    <!--
+		///////////////////////////////////////////////////////////////////
+		//////////     MODAL MESSAGES     //////////
+		///////////////////////////////////////////////////////////////
+		-->
+    <div id="md-add-event" class="modal fade md-slideUp" tabindex="-1" data-width="450" data-header-color="inverse">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
+            </button>
+            <h4 class="modal-title"><i class="fa fa-plus"></i> Add new events</h4>
+        </div>
+        <!-- //modal-header-->
+        <div class="modal-body" style="padding-bottom:0">
+            <form id="addEvent" action="/addMessage" method="post">
+                <div class="form-group">
+                    <label class="control-label">To: (Email Address)</label>
+                    <input type="text" class="form-control" id="event_title" name="userToEmail">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Amount: (Negative Number means Take money from This People)</label>
+                    <input type="number" class="form-control" id="event_title" name="amount">
+                </div>
+                <div class="form-group">
+                    <hr>
+                    <button type="submit" class="btn btn-theme">Submit Message</button>
+                    <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <!-- //modal-body-->
+    </div>
+    <!-- //modal-->
 
 </div>
 <!-- //wrapper-->

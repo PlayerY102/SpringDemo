@@ -62,7 +62,10 @@ public class User {
 		return remain;
 	}
 
-	public void setRemain(Integer remain) {
+	public void setRemain(Integer remain) throws Exception{
+		if(remain<0){
+			throw new Exception("not enough money");
+		}
 		this.remain = remain;
 	}
 }

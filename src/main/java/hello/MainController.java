@@ -49,7 +49,7 @@ public class MainController {
 	@PostMapping(path="/add")
 	@ResponseBody
 	public Object addNewUser (@RequestParam String name
-			, @RequestParam String email, @RequestParam String password,HttpServletRequest request,Model model) {
+			, @RequestParam String email, @RequestParam String password,HttpServletRequest request,Model model) throws Exception{
 
 		HttpSession session=request.getSession();
 
@@ -68,6 +68,7 @@ public class MainController {
 		session.setAttribute("currentUser",user);
 		return "0";
 	}
+
 
 	@PostMapping(path = "/login")
 	@ResponseBody
@@ -119,39 +120,8 @@ public class MainController {
 		return "updateMain";
 	}
 
-	@PostMapping(path = "addTransaction")
-	public String addTransaction(@RequestParam String friendEmail,@RequestParam int amount, Model model,HttpServletResponse response,HttpServletRequest request)throws IOException{
 
-		HttpSession session=request.getSession();
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-
-		User userFrom=(User)session.getAttribute("currentUser");
-		if(userFrom== null){
-			out.print("<script>alert('你还未登录')</script>");
-			return "login";
-		}
-		List<User> users = userRepository.findByEmail(friendEmail);
-		if (users == null||users.size()<=0) {
-			out.print("<script>alert('该用户不存在')</script>");
-			return "updateMain";
-		}
-		User userTo=users.get(0);
-		Transaction transaction=new Transaction();
-		transaction.setAmount(amount);
-		transaction.setUserFrom(userFrom.getId());
-		transaction.setUserTo(userTo.getId());
-		transaction.setTime(Calendar.getInstance());
-		transactionRepository.save(transaction);
-		userFrom.setRemain(userFrom.getRemain()-amount);
-		userTo.setRemain(userTo.getRemain()+amount);
-		userRepository.save(userTo);
-		userRepository.save(userFrom);
-
-		return "updateMain";
-	}
-
-	@RequestMapping(path="updateMain")
+	@RequestMapping(path="/updateMain")
 	public String updateMain( Model model,HttpServletResponse response,HttpServletRequest request)throws IOException{
 
 		log.info("into updateMain");
@@ -164,6 +134,7 @@ public class MainController {
 			out.print("<script>alert('未登录')</script>");
 			return "login";
 		}
+		currentUser=userRepository.findById(currentUser.getId().intValue());
 		model.addAttribute("currentUser",currentUser);
 		List<Friend> friends=friendRepository.findByUserA(currentUser.getId());
 		List<Integer> myFriendsInteger=friends.stream().map(Friend::getUserB).collect(Collectors.toList());
@@ -191,6 +162,89 @@ public class MainController {
 
 		return "dashboard";
 	}
+
+	@PostMapping(path = "/addTransaction")
+	public String addTransaction(@RequestParam int messageId,HttpServletResponse response,HttpServletRequest request)throws Exception{
+
+		HttpSession session=request.getSession();
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+
+		Message message=messageRepository.findById(messageId);
+
+		if(message==null){
+			out.print("<script>alert('无记录')</script>");
+			return "updateMain";
+		}
+
+		User userFrom=userRepository.findById(message.getUserFrom().intValue());
+
+		User userTo=userRepository.findById(message.getUserTo().intValue());
+
+		int amount=message.getAmount();
+		try{
+			userFrom.setRemain(userFrom.getRemain()-amount);
+			userTo.setRemain(userTo.getRemain()+amount);
+		}catch (Exception e){
+			log.warn(e.toString());
+			out.print("<script>alert('余额不够')</script>");
+			return "updateMain";
+		}
+
+		Transaction transaction=new Transaction(message);
+		transactionRepository.save(transaction);
+
+		userRepository.save(userTo);
+		userRepository.save(userFrom);
+
+		return "updateMain";
+	}
+
+	@PostMapping(path="/addMessage")
+	public String addMessage(@RequestParam String userToEmail,@RequestParam int amount,HttpServletResponse response,HttpServletRequest request)throws IOException{
+		HttpSession session=request.getSession();
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+
+		User userFrom=(User)session.getAttribute("currentUser");
+
+		if(userFrom== null){
+			out.print("<script>alert('你还未登录')</script>");
+			return "login";
+		}
+		List<User> users = userRepository.findByEmail(userToEmail);
+		if (users == null||users.size()<=0) {
+			out.print("<script>alert('该用户不存在')</script>");
+			return "updateMain";
+		}
+		User userTo=users.get(0);
+		if(amount>userFrom.getRemain()){
+			out.print("<script>alert('超过你的余额')</script>");
+			return "updateMain";
+		}
+		Message message=new Message();
+		message.setAmount(amount);
+		message.setTime(Calendar.getInstance());
+		message.setUserFrom(userFrom.getId());
+		message.setUserTo(userTo.getId());
+
+		messageRepository.save(message);
+
+		return "updateMain";
+	}
+
+
+	@PostMapping(path="/delMessage")
+	@ResponseBody
+	public Object delMessage(@RequestParam int messageId){
+		Message message=messageRepository.findById(messageId);
+		if(message==null){
+			return "1";
+		}
+		messageRepository.deleteById(messageId);
+		return "0";
+	}
+
 
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<User> getAllUsers() {

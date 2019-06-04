@@ -16,6 +16,16 @@ public class Transaction implements Comparable<Transaction>{
     private Integer amount;
     private Calendar time;
 
+
+    public Transaction() {
+    }
+
+    public Transaction(Message message){
+        this.setTime(Calendar.getInstance());
+        this.setAmount(message.getAmount());
+        this.setUserFrom(message.getUserFrom());
+        this.setUserTo(message.getUserTo());
+    }
     @Override
     public String toString() {
         return "Transaction{" +

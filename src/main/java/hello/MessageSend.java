@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class MessageSend {
+    private Integer id;
     private User userFrom;
     private User userTo;
     private String context;
@@ -11,6 +12,7 @@ public class MessageSend {
 
 
     public MessageSend(Message message,UserRepository userRepository){
+        this.id=message.getId();
         this.userFrom=userRepository.findById(message.getUserFrom().intValue());
         this.userTo=userRepository.findById(message.getUserTo().intValue());
         int amount=message.getAmount();
@@ -23,14 +25,24 @@ public class MessageSend {
         this.time=message.getTime();
     }
 
+
     @Override
     public String toString() {
         return "MessageSend{" +
-                "userFrom=" + userFrom +
+                "id=" + id +
+                ", userFrom=" + userFrom +
                 ", userTo=" + userTo +
                 ", context='" + context + '\'' +
                 ", time=" + time +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public User getUserFrom() {
