@@ -999,6 +999,14 @@ $(function () {
         }, 500);
 
     });
+    $("a.myAddEvent").click(function () {
+        console.log("in my event")
+        var temp=document.getElementById("myEventEmail");
+        // console.log(temp);
+        // console.log(this);
+        // console.log(this.getAttribute("value"));
+        temp.value=this.getAttribute("value");
+    });
 });
     
     

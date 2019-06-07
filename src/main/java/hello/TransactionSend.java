@@ -3,6 +3,7 @@ package hello;
 import java.util.Calendar;
 
 public class TransactionSend {
+    private Integer id;
     private User userFrom;
     private User userTo;
     private String context;
@@ -10,6 +11,7 @@ public class TransactionSend {
 
 
     public TransactionSend(Transaction transaction,UserRepository userRepository){
+        this.id=transaction.getId();
         this.userFrom=userRepository.findById(transaction.getUserFrom().intValue());
         this.userTo=userRepository.findById(transaction.getUserTo().intValue());
         int amount=transaction.getAmount();
@@ -17,18 +19,28 @@ public class TransactionSend {
             this.context=" sent "+amount+" to you";
         }
         else{
-            this.context=" took "+amount+" from you";
+            this.context=" took "+(-1*amount)+" from you";
         }
         this.time=transaction.getTime();
     }
+
     @Override
     public String toString() {
         return "TransactionSend{" +
-                "userFrom=" + userFrom +
+                "id=" + id +
+                ", userFrom=" + userFrom +
                 ", userTo=" + userTo +
                 ", context='" + context + '\'' +
                 ", time=" + time +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public User getUserFrom() {

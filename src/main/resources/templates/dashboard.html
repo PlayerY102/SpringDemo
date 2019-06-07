@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
     <!-- Title-->
-    <title>CAPLET | Admin HTML Themes</title>
+    <title>Yang | 虚拟交易系统</title>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -55,8 +55,8 @@
                 </li>
                 <li><a href="#" class="nav-collapse avatar-header" data-toggle="tooltip" title="Show / hide  menu"
                        data-container="body" data-placement="bottom">
-                    <img alt="" src="assets/img/avatar.png" class="circle">
-                    <span class="badge">3</span>
+                    <img alt="" src="assets/img/men-1.jpg" class="circle">
+                    <span class="badge" th:text="${messages.size()}">3</span>
                 </a>
                 </li>
                 <li class="dropdown">
@@ -70,7 +70,7 @@
                         <li><a href="#"><i class="fa fa-bookmark"></i> Bookmarks</a></li>
                         <li><a href="#"><i class="fa fa-money"></i> Make a Deposit</a></li>
                         <li class="divider"></li>
-                        <li><a href="#"><i class="fa fa-sign-out"></i> Signout </a></li>
+                        <li><a href="/"><i class="fa fa-sign-out"></i> Signout </a></li>
                     </ul>
                     <!-- //dropdown-menu-->
                 </li>
@@ -100,107 +100,34 @@
 								<span class="easy-chart avatar-chart" data-color="theme-inverse" data-percent="69"
                                       data-track-color="rgba(255,255,255,0.1)" data-line-width="5" data-size="118">
 										<span class="percent"></span>
-										<img alt="" src="assets/img/avatar.png" class="circle">
+										<img alt="" src="assets/img/men-1.jpg" class="circle">
 								</span>
                 <!-- //avatar-chart-->
-
+                <span id="friendSize" th:text="${myFriends.size()}" hidden></span>
                 <div class="avatar-detail">
                     <p th:text="${currentUser.name}"><strong>Hi </strong></p>
                     <p><a href="" th:text="${currentUser.email}"></a></p>
-                    <span th:text="'Currencies: '+${currentUser.remain}"></span>
-                    <span th:text="'Friends: '+${myFriends.size()}"></span>
+                    <span th:text="'余额: '+${currentUser.remain}"></span>
+                    <span th:text="'好友: '+${myFriends.size()}"></span>
                 </div>
                 <!-- //avatar-detail-->
 
                 <div class="avatar-link btn-group btn-group-justified">
-                    <a class="btn" href="profile.html" title="Portfolio"><i class="fa fa-briefcase"></i></a>
+                    <a class="btn" data-toggle="modal" href="#md-history" title="History">
+                        <i class="fa fa-book"></i>
+                    </a>
                     <a class="btn" data-toggle="modal" href="#md-notification" title="Notification">
                         <i class="fa fa-bell-o"></i><em class="green"></em>
                     </a>
                     <a class="btn" data-toggle="modal" href="#md-messages" title="Messages">
                         <i class="fa fa-envelope-o"></i><em class="active"></em>
                     </a>
-                    <a class="btn" href="#menu-right" title="Contact List"><i class="fa fa-book"></i></a>
+                    <a class="btn" href="#menu-right" title="Tool Box"><i class="fa fa-briefcase"></i></a>
                 </div>
                 <!-- //avatar-link-->
 
             </div>
             <!-- //avatar-slide-->
-
-
-            <div class="widget-collapse dark">
-                <header>
-                    <a data-toggle="collapse" href="#collapseSummary"><i class="collapse-caret fa fa-angle-up"></i>
-                        Summary Order </a>
-                </header>
-                <section class="collapse in" id="collapseSummary">
-                    <div class="collapse-boby" style="padding:0">
-
-                        <div class="widget-mini-chart align-xs-left">
-                            <div class="pull-right">
-                                <div class="sparkline mini-chart" data-type="bar" data-color="warning"
-                                     data-bar-width="10" data-height="35">2,3,4,5,7,4,5
-                                </div>
-                            </div>
-                            <p>This week's balance</p>
-                            <h4>$12,788</h4>
-                        </div>
-                        <!-- //widget-mini-chart -->
-
-                        <div class="widget-mini-chart align-xs-right">
-                            <div class="pull-left">
-                                <div class="sparkline mini-chart" data-type="bar" data-color="theme" data-bar-width="10"
-                                     data-height="45">2,3,7,5,4,6,6,3
-                                </div>
-                            </div>
-                            <p>This week sales</p>
-                            <h4>1,325 item</h4>
-                        </div>
-                        <!-- //widget-mini-chart -->
-
-                    </div>
-                    <!-- //collapse-boby-->
-
-                </section>
-                <!-- //collapse-->
-            </div>
-            <!-- //widget-collapse-->
-
-
-            <div class="widget-collapse dark">
-                <header>
-                    <a data-toggle="collapse" href="#collapseTasks"><i class="collapse-caret fa fa-angle-down"></i> (2)
-                        Tasks processing </a>
-                </header>
-                <section class="collapse" id="collapseTasks">
-
-                    <div class="collapse-boby">
-
-                        <div class="widget-slider">
-                            <p>Upload status</p>
-                            <div class="progress progress-dark progress-xs tooltip-in">
-                                <div class="progress-bar bg-darkorange" aria-valuetransitiongoal="75"></div>
-                            </div>
-                            <label class="progress-label">Master.zip 4 / 5 </label>
-                            <!-- //progress-->
-
-                            <div class="progress progress-dark progress-xs">
-                                <div class="progress-bar bg-theme-inverse" aria-valuetransitiongoal="45"></div>
-                            </div>
-                            <label class="progress-label lasted">Profile 2 / 5 </label>
-                            <!-- //progress-->
-
-                        </div>
-                        <!-- //widget-slider-->
-
-                    </div>
-                    <!-- //collapse-boby-->
-
-                </section>
-                <!-- //collapse-->
-            </div>
-            <!-- //widget-collapse-->
-
 
             <div class="widget-collapse dark">
                 <header>
@@ -276,8 +203,7 @@
 
         <ol class="breadcrumb">
             <li><a href="#">Home</a></li>
-            <li><a href="#">Library</a></li>
-            <li class="active">Data</li>
+            <li class="active">Main</li>
         </ol>
         <!-- //breadcrumb-->
 
@@ -337,126 +263,12 @@
             <div class="row">
 
                 <div class="col-lg-8">
-                    <section class="panel corner-flip">
-                        <div class="widget-chart bg-lightseagreen bg-gradient-green">
-                            <div id="reportrange" class="pull-right"
-                                 style="background: rgba(255,255,255,0.3); color:#FFF; cursor: pointer; padding: 5px 10px 10px; margin-top:5px;">
-																<span>
-																</span>
-                                <b class="caret"></b>
-                            </div>
-                            <h2>Revenue</h2>
-                            <table class="flot-chart" data-type="lines" data-tick-color="rgba(255,255,255,0.2)"
-                                   data-width="100%" data-height="220px">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th style="color : #FFF;">Test</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th>JAN</th>
-                                    <td>4295</td>
-                                </tr>
-                                <tr>
-                                    <th>FEB</th>
-                                    <td>5145</td>
-                                </tr>
-                                <tr>
-                                    <th>MAR</th>
-                                    <td>1015</td>
-                                </tr>
-                                <tr>
-                                    <th>APR</th>
-                                    <td>2500</td>
-                                </tr>
-                                <tr>
-                                    <th>MAY</th>
-                                    <td>0</td>
-                                </tr>
-                                <tr>
-                                    <th>JUN</th>
-                                    <td>15700</td>
-                                </tr>
-                                <tr>
-                                    <th>JUL</th>
-                                    <td>2315</td>
-                                </tr>
-                                <tr>
-                                    <th>AUG</th>
-                                    <td>200</td>
-                                </tr>
-                                <tr>
-                                    <th>SEP</th>
-                                    <td>5605</td>
-                                </tr>
-                                <tr>
-                                    <th>OCT</th>
-                                    <td>1900</td>
-                                </tr>
-                                <tr>
-                                    <th>NOV</th>
-                                    <td>1900</td>
-                                </tr>
-                                <tr>
-                                    <th>DEC</th>
-                                    <td>1900</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="panel-body">
-                            <h3>Last Month</h3>
-                            <div class="row align-lg-center">
-                                <div class="col-sm-6">
-                                    <div class="showcase showcase-pie-easy clearfix">
-																				<span class="easy-chart pull-left"
-                                                                                      data-percent="75"
-                                                                                      data-color="purple"
-                                                                                      data-track-color="#EDEDED"
-                                                                                      data-line-width="15"
-                                                                                      data-size="140">
-																						<span class="percent"></span>
-																				</span>
-                                        <ul>
-                                            <li>64,548
-                                                <small>Total page view</small>
-                                            </li>
-                                            <li>3,984
-                                                <small>Average</small>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="showcase showcase-chart-knob">
-                                        <div class="clearfix">
-																						<span>
-																								<i class="fa fa-desktop"></i>
-																								<a href="#">desktop<small>75</small></a>
-																						</span>
-                                            <span>
-																								<i class="fa fa-mobile-phone"></i>
-																								<a href="#">mobile<small>25</small></a>
-																						</span>
-                                        </div>
-                                        <input class="knob" data-animate="true" data-displayInput="false"
-                                               data-thickness="0.2" data-width="140" data-height="140"
-                                               data-angleOffset="-125" data-angleArc="250" data-color="darkorange"
-                                               value="75" readonly>
-                                        <h5><i class="fa fa-globe"></i> Desktop </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                     <div class="widget-timeline">
                         <ul>
                             <li class="history">
-																<span>
-																		October 2013
-																</span>
+                                <span>
+                                    June 2019
+                                </span>
                             </li>
                             <li class="right animated" data-effect="fadeInLeft">
                                 <section>
@@ -532,32 +344,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-
-                    <section class="panel">
-                        <div class="widget-friend clearfix">
-                            <ul class="circle clearfix">
-                                <li>548 Follower Friends</li>
-                                <li class="online" title="zicdemo"><img alt="" src="assets/img/avatar.png"></li>
-                                <li class="online"><img alt="" src="assets/img/avatar2.png"></li>
-                                <li><img alt="" src="assets/img/avatar3.png"></li>
-                                <li class="online"><img alt="" src="assets/img/avatar4.png"></li>
-                                <li><img alt="" src="assets/img/avatar5.png"></li>
-                                <li class="busy"><img alt="" src="assets/img/avatar6.png"></li>
-                                <li class="online"><img alt="" src="assets/photos_preview/50/people/1.jpg"></li>
-                                <li class="online"><img alt="" src="assets/photos_preview/50/people/2.jpg"></li>
-                                <li><a href="#"><i class="fa fa-plus"></i></a></li>
-                            </ul>
-                        </div>
-                        <footer class="panel-footer align-lg-right">
-                            <a href="#">+ 542 more</a>
-                        </footer>
-                    </section>
-
                     <div class="widget-write-post">
-                        <ul>
-                            <li class="active"><i class="fa fa-pencil"></i> Write Post</li>
-                            <li><i class="fa fa-picture-o"></i> Add Images</li>
-                        </ul>
                         <div>
                             <form>
                                 <textarea class="form-control" placeholder="Write something..."></textarea>
@@ -571,109 +358,7 @@
                         </div>
                     </section>
 
-                    <section class="panel">
-                        <div class="widget-plan">
-                            <header>
-                                <h3>Premium</h3>
-                                <p class="color-theme">$59 / year</p>
-                            </header>
-                            <section>
-                                <i class="fa fa-dashboard"></i>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-                            </section>
-                            <footer>
-                                <button type="button" class="btn btn-theme">Choose</button>
-                            </footer>
-                        </div>
-                    </section>
 
-                    <section class="panel">
-                        <header class="panel-heading">
-                            <h2><strong>Support</strong> Tickets</h2>
-                            <label class="color">less than a minute ago</label>
-                        </header>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <a href="#"><span class="badge pull-right bg-theme">30</span> Unread Tickets</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#"><span class="badge pull-right">2</span> New Tickets</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#"> Pending Tickets</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#"> Drafts</a>
-                            </li>
-                        </ul>
-                    </section>
-
-                    <section class="panel">
-                        <div class="widget-chat">
-                            <header>
-																<span class="chat-collapse pull-right"
-                                                                      title="Collapse chat">
-																		<i class="fa fa-minus"></i>
-																</span>
-                                <h4 class="online"> Chatting with Mayane</h4>
-                            </header>
-                            <div class="chat-body">
-                                <dl class="chat">
-                                    <dt><strong>Yesterday</strong> 7:45 PM</dt>
-                                    <dd class="to">
-                                        <p>Strange as it may seem, they give ball players nowadays very peculiar
-                                            names.</p>
-                                    </dd>
-                                    <dd class="from">
-                                        <p>Funny names?</p>
-                                        <img alt="" src="assets/img/avatar2.png" class="avatar circle">
-                                    </dd>
-                                    <dd class="to">
-                                        <p>Nicknames, nicknames.</p>
-                                        <p>Now, on the St. Louis team we have Who's on first, What's on second, I Don't
-                                            Know is on third--</p>
-                                    </dd>
-                                    <dd class="from">
-                                        <p>That's what I want to find out.</p>
-                                        <p>I want you to tell me the names of the fellows on the St. Louis team.</p>
-                                        <img alt="" src="assets/img/avatar2.png" class="avatar circle">
-                                    </dd>
-                                    <dd class="to">
-                                        <p>Yes.</p>
-                                    </dd>
-                                    <dd class="from">
-                                        <p>You know the fellows' names?</p>
-                                        <img alt="" src="assets/img/avatar2.png" class="avatar circle">
-                                    </dd>
-                                    <dt><strong>Yesterday</strong> 8:31 PM</dt>
-                                    <dd class="from">
-                                        <p>Well, then who's playing first?</p>
-                                        <img alt="" src="assets/img/avatar2.png" class="avatar circle">
-                                    </dd>
-                                    <dd class="to">
-                                        <p>Yes.</p>
-                                    </dd>
-                                    <dd class="from">
-                                        <p>I mean the fellow's name on first base.</p>
-                                        <img alt="" src="assets/img/avatar2.png" class="avatar circle">
-                                    </dd>
-                                    <dd>
-                                        <ul class="load-bubble">
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-                            </div>
-                            <footer>
-                                <form class="message-input">
-                                    <input name="message" type="text" placeholder="Enter your message"/>
-                                    <button type="button" class="btn btn-theme">Send</button>
-                                </form>
-                            </footer>
-                        </div>
-                    </section>
                 </div>
 
             </div>
@@ -683,7 +368,7 @@
         <!-- //content-->
 
         <footer id="site-footer">
-            <section>&copy; Copyright 2014, By zicedemo</section>
+            <section>&copy; Copyright 2019, By Yang</section>
         </footer>
 
     </div>
@@ -699,7 +384,7 @@
         <div class="modal-header bd-theme-inverse-darken">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
             </button>
-            <h4 class="modal-title"><i class="fa fa-inbox"></i> Inbox messages</h4>
+            <h4 class="modal-title"><i class="fa fa-inbox"></i> 未处理的交易信息 </h4>
         </div>
         <!-- //modal-header-->
         <div class="modal-body" style="padding:0">
@@ -750,6 +435,65 @@
     </div>
     <!-- //modal-->
 
+    <!--
+        ///////////////////////////////////////////////////////////////////
+        //////////     MODAL MESSAGES     //////////
+        ///////////////////////////////////////////////////////////////
+        -->
+    <div id="md-history" class="modal fade md-slideUp bg-theme-inverse" tabindex="-1" data-width="450">
+        <div class="modal-header bd-theme-inverse-darken">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
+            </button>
+            <h4 class="modal-title"><i class="fa fa-inbox"></i> 历史交易 </h4>
+        </div>
+        <!-- //modal-header-->
+        <div class="modal-body" style="padding:0">
+            <div class="widget-im">
+                <ul>
+                    <li th:each="i:${transactions}" th:value="${i.id}">
+                        <section class="thumbnail-in">
+                            <div class="widget-im-tools tooltip-area pull-right">
+                                <!--                                <span>-->
+                                <!--                                    <a href="javascript:void(0)" class="im-accept" data-toggle="tooltip" title="Accept">-->
+                                <!--                                       <i class="fa fa-reply-all"></i>-->
+                                <!--                                    </a>-->
+                                <!--                                </span>-->
+                                <!--                                <span>-->
+                                <!--                                    <i class="fa fa-paperclip"></i>-->
+                                <!--                                </span>-->
+                                <!--                                <span>-->
+                                <!--                                    <a href="javascript:void(0)" class="im-delete" data-toggle="tooltip" title="Delete">-->
+                                <!--                                        <i class="fa fa-trash-o"></i>-->
+                                <!--                                    </a>-->
+                                <!--                                </span>-->
+                                <span>
+                                    <time th:text="${#dates.format(i.time, 'yyyy-MM-dd HH:mm:ss')}"></time>
+                                </span>
+                            </div>
+                            <h4><a href="javascript:void(0)" th:text="${i.userFrom.name}"></a>
+                            </h4>
+                            <div class="im-thumbnail"><img alt="" src="assets/img/avatar2.png"/></div>
+                            <label></label>
+                            <div class="pre-text" th:text="${i.context}">
+                            </div>
+                        </section>
+                        <div class="im-confirm-group">
+                            <div class=" btn-group btn-group-justified">
+                                <a class="btn btn-inverse im-confirm" href="javascript:void(0)"
+                                   data-confirm="yes">YES.</a>
+                                <a class="btn btn-theme im-confirm" href="javascript:void(0)" data-confirm="no">NO.</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <a class="btn btn-inverse btn-block btn-lg" data-toggle="modal" href="#md-add-event"><i
+                        class="fa fa-plus"></i></a>
+            </div>
+            <!-- //widget-im-->
+        </div>
+        <!-- //modal-body-->
+    </div>
+    <!-- //modal-->
 
     <!--
     //////////////////////////////////////////////////////////////////////////
@@ -770,7 +514,7 @@
                         <section class="thumbnail-in">
                             <div class="widget-im-tools tooltip-area pull-right">
 																<span>
-																		<time class="timeago lasted" datetime="2014">when you opened the page</time>
+																		<time class="timeago lasted" datetime="2019">when you opened the page</time>
 																</span>
                                 <span>
 																		<a href="javascript:void(0)" class="im-action"
@@ -794,7 +538,7 @@
                             <div class="widget-im-tools tooltip-area pull-right">
 																<span>
 																		<time class="timeago"
-                                                                              datetime="2013-11-17T14:24:17Z">timeago</time>
+                                                                              datetime="2019-05-30T14:24:17Z">timeago</time>
 																</span>
                                 <span>
 																		<a href="javascript:void(0)" class="im-action"
@@ -811,7 +555,7 @@
                         </section>
                         <div class="im-confirm-group">
                             <div class=" btn-group btn-group-justified">
-                                <a class="btn btn-inverse" href="dashboard.html">Go Now.</a>
+                                <a class="btn btn-inverse" href="#">Go Now.</a>
                                 <a class="btn btn-theme im-confirm" href="javascript:void(0)"
                                    data-confirm="no">Later.</a>
                             </div>
@@ -822,7 +566,7 @@
                             <div class="widget-im-tools tooltip-area pull-right">
 																<span>
 																		<time class="timeago"
-                                                                              datetime="2013-11-17T01:24:17Z">timeago</time>
+                                                                              datetime="2019-05-30T01:24:17Z">timeago</time>
 																</span>
                                 <span>
 																		<a href="javascript:void(0)" class="im-action"
@@ -850,7 +594,7 @@
                             <div class="widget-im-tools tooltip-area pull-right">
 																<span>
 																		<time class="timeago"
-                                                                              datetime="2013-09-17T09:24:17Z">timeago</time>
+                                                                              datetime="2019-05-30T09:24:17Z">timeago</time>
 																</span>
                                 <span>
 																		<a href="javascript:void(0)" class="im-action"
@@ -892,50 +636,50 @@
         <ul>
             <li><span><i class="icon  fa fa-laptop"></i> Dashboard</span>
                 <ul>
-                    <li><a href="dashboard.html"><i class="icon  fa fa-rocket"></i> First Design </a></li>
-                    <li><a href="dashboard2.html"><i class="icon  fa fa-th"></i> Dashboard New </a></li>
+                    <li><a href="#"><i class="icon  fa fa-rocket"></i> First Design </a></li>
+                    <li><a href="#"><i class="icon  fa fa-th"></i> Dashboard New </a></li>
                 </ul>
             </li>
-            <li><a href="front/index.html"><i class="icon  fa fa-rocket"></i> Front End </a></li>
+            <li><a href="#"><i class="icon  fa fa-rocket"></i> Front End </a></li>
             <li><span><i class="icon  fa fa-th-list"></i> Layout</span>
                 <ul>
                     <li class="Label label-lg">Main Layout</li>
-                    <li><a href="alwayMenu.html"> Alway Left Menu </a></li>
-                    <li><a href="hideUserPanel.html"> Hide User Panel </a></li>
-                    <li><a href="hideUserPanelIn.html"> Show & Hide</a></li>
-                    <li class="Label label-lg">Other Layout</li>
-                    <li><a href="topMenu.html"> Top Menu</a></li>
-                    <li><a href="footerShow.html"> Footer Show</a></li>
-                    <li><a href="footerMenu.html"> Footer with menu</a></li>
+                    <li><a href="#"> Alway Left Menu </a></li>
+                    <li><a href="#"> Hide User Panel </a></li>
+                    <li><a href="#"> Show & Hide</a></li>
+                    <li class="#">Other Layout</li>
+                    <li><a href="#"> Top Menu</a></li>
+                    <li><a href="#"> Footer Show</a></li>
+                    <li><a href="#"> Footer with menu</a></li>
                 </ul>
             </li>
             <li><a href="mailBox.html"><i class="icon  fa fa-inbox"></i> Mail</a></li>
             <li><span><i class="icon  fa fa-briefcase"></i> UI Element</span>
                 <ul>
-                    <li><a href="ui.html"> UI </a></li>
-                    <li><a href="ui_button.html"> Button </a></li>
-                    <li><a href="ui_icon.html"> Fonts Icon</a></li>
-                    <li><a href="ui_slide.html"> Slide</a></li>
-                    <li><a href="ui_modal.html"> Modal</a></li>
-                    <li><a href="ui_panel.html"> Panel</a></li>
-                    <li><a href="ui_alert.html"> Alert</a></li>
-                    <li><a href="ui_typography.html"> Typography</a></li>
-                    <li><a href="ui_nestable.html"> Nestable</a></li>
+                    <li><a href="#"> UI </a></li>
+                    <li><a href="#"> Button </a></li>
+                    <li><a href="#"> Fonts Icon</a></li>
+                    <li><a href="#"> Slide</a></li>
+                    <li><a href="#"> Modal</a></li>
+                    <li><a href="#"> Panel</a></li>
+                    <li><a href="#"> Alert</a></li>
+                    <li><a href="#"> Typography</a></li>
+                    <li><a href="#"> Nestable</a></li>
                 </ul>
             </li>
             <li><span><i class="icon  fa fa-bar-chart-o"></i> Chart </span>
                 <ul>
-                    <li><a href="chartFlot.html"> Flot Chart</a></li>
-                    <li><a href="chartMorris.html"> Morris Chart</a></li>
-                    <li><a href="chartOther.html"> Other Chart</a></li>
+                    <li><a href="#"> Flot Chart</a></li>
+                    <li><a href="#"> Morris Chart</a></li>
+                    <li><a href="#"> Other Chart</a></li>
                 </ul>
             </li>
             <li><a href="calendar.html"><i class="icon  fa fa-calendar-o"></i> Calendar </a></li>
             <li><span><i class="icon  fa fa-align-right"></i>Off  Canvas  Menu</span>
                 <ul>
-                    <li><a href="menu.html"> Position </a></li>
-                    <li><a href="menuOpen.html"> Touch to open</a></li>
-                    <li><a href="menuVertical.html"> Vertical Level</a></li>
+                    <li><a href="#"> Position </a></li>
+                    <li><a href="#"> Touch to open</a></li>
+                    <li><a href="#"> Vertical Level</a></li>
                     <li><span> Unlimited Level </span>
                         <ul>
                             <li><a href="#"> Level 3 </a></li>
@@ -952,42 +696,42 @@
             </li>
             <li><span><i class="icon  fa fa-clipboard"></i> From</span>
                 <ul>
-                    <li><a href="form.html">Form Basic</a></li>
-                    <li><a href="formComponents.html">Form Components</a></li>
-                    <li><a href="formValidate.html">Form Validate</a></li>
-                    <li><a href="formWizard.html">Form Wizard</a></li>
-                    <li><a href="formMutiselect.html">Form Mutiseletion</a></li>
-                    <li><a href="form_x_edit.html">Form x-edit</a></li>
-                    <li><a href="drop_upload.html">Drop Upload</a></li>
+                    <li><a href="#">Form Basic</a></li>
+                    <li><a href="#">Form Components</a></li>
+                    <li><a href="#">Form Validate</a></li>
+                    <li><a href="#">Form Wizard</a></li>
+                    <li><a href="#">Form Mutiseletion</a></li>
+                    <li><a href="#">Form x-edit</a></li>
+                    <li><a href="#">Drop Upload</a></li>
                 </ul>
             </li>
-            <li><a href="fileManager.html"><i class="icon  fa fa-file-text"></i> File Manager </a></li>
+            <li><a href="#"><i class="icon  fa fa-file-text"></i> File Manager </a></li>
             <li><span><i class="icon  fa fa-fire"></i> Table</span>
                 <ul>
-                    <li><a href="table.html">Table Basic</a></li>
-                    <li><a href="tableResponsive.html">Table Responsive</a></li>
-                    <li><a href="tableDynamic.html">Data Table</a></li>
+                    <li><a href="#">Table Basic</a></li>
+                    <li><a href="#">Table Responsive</a></li>
+                    <li><a href="#">Data Table</a></li>
                 </ul>
             </li>
             <li><span><i class="icon  fa fa-folder-open-o"></i> Other Page</span>
                 <ul>
-                    <li><a href="login.html"> login </a></li>
-                    <li><a href="lockscreen.html"> Lockscreen </a></li>
-                    <li><a href="images_manager.html"> Images Manager</a></li>
-                    <li><a href="gallery.html"> Gallery</a></li>
-                    <li><a href="timeline.html"> Timeline</a></li>
-                    <li><a href="profile.html"> Profile</a></li>
-                    <li><a href="blankPage.html"> Blank Page</a></li>
-                    <li><a href="page_invoice.html"> Invoice</a></li>
-                    <li><a href="page_search.html"> Search result</a></li>
-                    <li><a href="pages_pricing.html"> Pricing Table</a></li>
-                    <li><a href="register.html"> Register</a></li>
-                    <li><a href="page_chat.html"> Full Chat</a></li>
+                    <li><a href="#"> login </a></li>
+                    <li><a href="#"> Lockscreen </a></li>
+                    <li><a href="#"> Images Manager</a></li>
+                    <li><a href="#"> Gallery</a></li>
+                    <li><a href="#"> Timeline</a></li>
+                    <li><a href="#"> Profile</a></li>
+                    <li><a href="#"> Blank Page</a></li>
+                    <li><a href="#"> Invoice</a></li>
+                    <li><a href="#"> Search result</a></li>
+                    <li><a href="#"> Pricing Table</a></li>
+                    <li><a href="#"> Register</a></li>
+                    <li><a href="#"> Full Chat</a></li>
                 </ul>
             </li>
-            <li><a href="map.html"><i class="icon  fa fa-map-marker"></i> Maps</a></li>
-            <li><a href="404.html"><i class="icon  fa fa-exclamation-triangle"></i> Error Pages</a></li>
-            <li><a href="siteMap.html"><i class="icon  fa fa-sitemap"></i>Site Map</a></li>
+            <li><a href="#"><i class="icon  fa fa-map-marker"></i> Maps</a></li>
+            <li><a href="#"><i class="icon  fa fa-exclamation-triangle"></i> Error Pages</a></li>
+            <li><a href="#"><i class="icon  fa fa-sitemap"></i>Site Map</a></li>
         </ul>
     </nav>
     <!-- //nav left menu-->
@@ -1000,7 +744,7 @@
 -->
     <nav id="menu-right">
         <ul>
-            <li class="Label label-lg">Theme color</li>
+            <li class="Label label-lg">主题</li>
             <li>
 							<span class="text-center">
 								<div id="style1" class="color-themes col1"></div>
@@ -1010,146 +754,31 @@
 								<div id="none" class="color-themes col5"></div>
 							</span>
             </li>
-            <li class="Label label-lg">Contact Group</li>
-            <li data-counter-color="theme">
-                <span><i class="icon fa fa-smile-o"></i> Friends</span>
+            <li class="Label label-lg">联系人</li>
+            <li data-counter-color="theme" class="myEm">
+                <span><i class="icon fa fa-smile-o"></i> 好友 </span>
                 <ul>
-                    <li th:each="i:${myFriends}" class="img">
-                        <a href="#">
-                            <img alt="" src="assets/photos_preview/50/people/2.jpg"/>
+                    <a class="btn btn-inverse btn-block btn-lg" data-toggle="modal" href="#md-add-friend">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <a th:each="i:${myFriends}" th:value="${i.email}" class="myAddEvent" data-toggle="modal"
+                       href="#md-add-event">
+                        <li class="img">
+                            <img width="40px" alt="" src="assets/img/md-contact.png"/>
                             <strong th:text="${i.name}"></strong>
                             <small th:text="${i.email}"></small>
-                        </a>
-                    </li>
+                        </li>
+                    </a>
                 </ul>
             </li>
             <li>
-                <span><i class="icon  fa fa-home"></i> Family</span>
+                <span><i class="icon  fa fa-home"></i> 群聊 </span>
                 <ul>
-                    <li class="Label">A</li>
-                    <li class="img">
-                        <a href="#" class="busy">
-                            <img alt="" src="assets/photos_preview/50/people/3.jpg"/> Adam
-                            <small>White</small>
-                        </a>
-                    </li>
-                    <li class="Label">B</li>
-                    <li class="img">
-                        <a href="#" class="busy">
-                            <img alt="" src="assets/photos_preview/50/people/4.jpg"/> Ben
-                            <small>Robinson</small>
-                        </a>
-                    </li>
-                    <li class="img">
-                        <a href="#">
-                            <img alt="" src="assets/photos_preview/50/people/5.jpg"/> Bruce
-                            <small>Lee</small>
-                        </a>
-                    </li>
-                    <li class="Label">E</li>
-                    <li class="img">
-                        <a href="#">
-                            <img alt="" src="assets/photos_preview/50/people/6.jpg"/> Eddie
-                            <small>Williams</small>
-                        </a>
-                    </li>
-                    <li class="Label">J</li>
-                    <li class="img">
-                        <a href="#" class="online">
-                            <img alt="" src="assets/photos_preview/50/people/7.jpg"/> Jack
-                            <small>Johnson</small>
-                        </a>
-                    </li>
-                    <li class="img">
-                        <a href="#">
-                            <img alt="" src="assets/photos_preview/50/people/8.jpg"/> John
-                            <small>Jackman</small>
-                        </a>
-                    </li>
-                    <li class="Label">M</li>
-                    <li class="img">
-                        <a href="#">
-                            <img alt="" src="assets/photos_preview/50/people/9.jpg"/> Martina
-                            <small>Thompson</small>
-                        </a>
-                    </li>
-                    <li class="img">
-                        <a href="#" class="busy">
-                            <img alt="" src="assets/photos_preview/50/people/10.jpg"/> Matthew
-                            <small>Watson</small>
-                        </a>
-                    </li>
-                    <li class="Label">O</li>
-                    <li class="img">
-                        <a href="#" class="online">
-                            <img alt="" src="assets/photos_preview/50/people/1.jpg"/> Olivia
-                            <small>Taylor</small>
-                        </a>
-                    </li>
-                    <li class="img">
-                        <a href="#" class="online">
-                            <img alt="" src="assets/photos_preview/50/people/2.jpg"/> Owen
-                            <small>Wilson</small>
-                        </a>
-                    </li>
                 </ul>
             </li>
             <li data-counter-color="theme-inverse">
-                <span><i class="icon  fa fa-briefcase"></i> Work colleagues</span>
+                <span><i class="icon  fa fa-briefcase"></i> 标签 </span>
                 <ul>
-                    <li class="Label">D</li>
-                    <li class="img">
-                        <a href="#">
-                            <img alt="" src="assets/photos_preview/50/people/3.jpg"/> David
-                            <small>Harris</small>
-                        </a>
-                    </li>
-                    <li class="img">
-                        <a href="#">
-                            <img alt="" src="assets/photos_preview/50/people/4.jpg"/> Dennis
-                            <small>King</small>
-                        </a>
-                    </li>
-                    <li class="Label">E</li>
-                    <li class="img">
-                        <a href="#" class="online">
-                            <img alt="" src="assets/photos_preview/50/people/5.jpg"/> Eliza
-                            <small>Walker</small>
-                        </a>
-                    </li>
-                    <li class="Label">L</li>
-                    <li class="img">
-                        <a href="#" class="busy">
-                            <img alt="" src="assets/photos_preview/50/people/6.jpg"/> Larry
-                            <small>Turner</small>
-                        </a>
-                    </li>
-                    <li class="img">
-                        <a href="#" class="online">
-                            <img alt="" src="assets/photos_preview/50/people/7.jpg"/> Lisa<br/>
-                            <small>Wilson</small>
-                        </a>
-                    </li>
-                    <li class="Label">M</li>
-                    <li class="img">
-                        <a href="#">
-                            <img alt="" src="assets/photos_preview/50/people/8.jpg"/> Michael
-                            <small>Jordan</small>
-                        </a>
-                    </li>
-                    <li class="Label">R</li>
-                    <li class="img">
-                        <a href="#">
-                            <img alt="" src="assets/photos_preview/50/people/9.jpg"/> Rachelle
-                            <small>Cooper</small>
-                        </a>
-                    </li>
-                    <li class="img">
-                        <a href="#" class="online">
-                            <img alt="" src="assets/photos_preview/50/people/10.jpg"/> Rick
-                            <small>James</small>
-                        </a>
-                    </li>
                 </ul>
             </li>
             <li class="Label label-lg">Total week Earnings</li>
@@ -1229,37 +858,6 @@
                                     <!-- //progress-->
 								</span>
             </li>
-            <li class="Label label-lg">Quick Friends Chat</li>
-            <li class="img">
-                <a href="#" class="online">
-                    <img alt="" src="assets/photos_preview/50/people/1.jpg"/> Olivia
-                    <small>Taylor</small>
-                </a>
-            </li>
-            <li class="img">
-                <a href="#" class="online">
-                    <img alt="" src="assets/photos_preview/50/people/2.jpg"/> Owen
-                    <small>Wilson</small>
-                </a>
-            </li>
-            <li class="img">
-                <a href="#">
-                    <img alt="" src="assets/photos_preview/50/people/8.jpg"/> Meagan
-                    <small>Miller</small>
-                </a>
-            </li>
-            <li class="img">
-                <a href="#" class="busy">
-                    <img alt="" src="assets/photos_preview/50/people/9.jpg"/> Melissa
-                    <small>Johnson</small>
-                </a>
-            </li>
-            <li class="img">
-                <a href="#" class="online">
-                    <img alt="" src="assets/photos_preview/50/people/5.jpg"/> Samantha
-                    <small>Harris</small>
-                </a>
-            </li>
             <li class="Label label-lg">visitors Real Time</li>
             <li>
 								<span>
@@ -1275,21 +873,21 @@
 
     <!--
 		///////////////////////////////////////////////////////////////////
-		//////////     MODAL MESSAGES     //////////
+		//////////     MODAL Add Event    //////////
 		///////////////////////////////////////////////////////////////
 		-->
     <div id="md-add-event" class="modal fade md-slideUp" tabindex="-1" data-width="450" data-header-color="inverse">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
             </button>
-            <h4 class="modal-title"><i class="fa fa-plus"></i> Add new events</h4>
+            <h4 class="modal-title"><i class="fa fa-plus"></i> 发送交易申请 </h4>
         </div>
         <!-- //modal-header-->
         <div class="modal-body" style="padding-bottom:0">
             <form id="addEvent" action="/addMessage" method="post">
                 <div class="form-group">
                     <label class="control-label">To: (Email Address)</label>
-                    <input type="text" class="form-control" id="event_title" name="userToEmail">
+                    <input type="text" class="form-control" id="myEventEmail" name="userToEmail">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Amount: (Negative Number means Take money from This People)</label>
@@ -1306,6 +904,29 @@
     </div>
     <!-- //modal-->
 
+    <div id="md-add-friend" class="modal fade md-slideUp" tabindex="-1" data-width="450" data-header-color="inverse">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
+            </button>
+            <h4 class="modal-title"><i class="fa fa-plus"></i> 添加好友 </h4>
+        </div>
+        <!-- //modal-header-->
+        <div class="modal-body" style="padding-bottom:0">
+            <form id="addEvent" action="/addFriend" method="post">
+                <div class="form-group">
+                    <label class="control-label">Friend Email: (Email Address)</label>
+                    <input type="text" class="form-control" id="event_title" name="friendEmail">
+                </div>
+                <div class="form-group">
+                    <hr>
+                    <button type="submit" class="btn btn-theme">Submit Message</button>
+                    <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <!-- //modal-body-->
+    </div>
+    <!-- //modal-->
 </div>
 <!-- //wrapper-->
 
@@ -1337,6 +958,11 @@
 <script type="text/javascript" src="assets/plugins/miscellaneous/miscellaneous.js"></script>
 <!-- Library Themes Customize-->
 <script type="text/javascript" src="assets/js/caplet.custom.js"></script>
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        var tar=$("#friendSize").text();
+        $(".myEm").children("em").text(tar)
+    });
+</script>
 </body>
 </html>

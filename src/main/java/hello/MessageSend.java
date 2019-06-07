@@ -20,7 +20,7 @@ public class MessageSend {
             this.context=" want to send "+amount+" to you";
         }
         else{
-            this.context=" want to take "+amount+" from you";
+            this.context=" want to take "+(-1*amount)+" from you";
         }
         this.time=message.getTime();
     }
