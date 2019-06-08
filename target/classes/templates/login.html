@@ -169,7 +169,7 @@
                         main.removeClass("slideDown")
                     }, e!="0" ? 500 : 3000);
                     if (e=="1") {
-                        $.notific8('User do not exist !! ', {
+                        $.notific8('改用户不存在 !! ', {
                             life: 5000,
                             horizontalEdge: "bottom",
                             theme: "danger",
@@ -177,7 +177,23 @@
                         });
                         return false;
                     }else if(e=="2"){
-                        $.notific8('Check Username or Password again !! ', {
+                        $.notific8('邮箱，密码错误 !! ', {
+                            life: 5000,
+                            horizontalEdge: "bottom",
+                            theme: "danger",
+                            heading: " ERROR :); "
+                        });
+                        return false;
+                    }else if(e=="3"){
+                        $.notific8('数据不一致，可能区块链还未更新完数据或数据受到篡改，请联系管理员 !! ', {
+                            life: 5000,
+                            horizontalEdge: "bottom",
+                            theme: "danger",
+                            heading: " ERROR :); "
+                        });
+                        return false;
+                    }else if(e=="4"){
+                        $.notific8('区块链无法查询，请联系管理员 !! ', {
                             life: 5000,
                             horizontalEdge: "bottom",
                             theme: "danger",
@@ -186,10 +202,10 @@
                         return false;
                     }
                     setTimeout(function () {
-                        $("#loading-top span").text("Yes, account is access...")
+                        $("#loading-top span").text("登录成功...")
                     }, 500);
                     setTimeout(function () {
-                        $("#loading-top span").text("Redirect to account page...")
+                        $("#loading-top span").text("正在进入主页面...")
                     }, 1500);
                     setTimeout("window.location.href='/updateMain'", 3100);
                 }

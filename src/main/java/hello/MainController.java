@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import hello.Fabric.HFJavaExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class MainController {
 
 		List<User> list=userRepository.findByEmail(email);
 		if(list!=null&&list.size()>0){
-			return "1";
+			return "1";//email已注册
 		}
 		User user=new User();
 		user.setName(name);
@@ -63,7 +64,13 @@ public class MainController {
 		user.setPassword(password);
 		user.setRemain(100);
 
-		userRepository.save(user);
+		userRepository.save(user);		//添加到sql
+		List<User> users=userRepository.findByEmail(email);
+		if (users == null||users.size()<=0) {
+			return "2";//数据库存储失败
+		}
+		user=users.get(0);
+		HFJavaExample.addUserToChain(user); //添加到区块链
 
 		session.setAttribute("currentUser",user);
 		return "0";
@@ -86,6 +93,17 @@ public class MainController {
 			return "1";
 		}
 		User user = users.get(0);
+		try{
+			User userFromChain=HFJavaExample.getUserFromChain(user.getId());
+			if(userFromChain==null){
+				return "4";
+			}
+			if(!userFromChain.equals(user)){
+				return "3";
+			}
+		}catch (Exception e){
+			return "4";
+		}
 		if (!user.getPassword().equals(password)) {
 			//out.print("<script>alert('密码错误')</script>");
 			return "2";
@@ -194,6 +212,8 @@ public class MainController {
 		Transaction transaction=new Transaction(message);
 		transactionRepository.save(transaction);
 
+		HFJavaExample.updateUser(userTo.getId(),userTo.getRemain());
+		HFJavaExample.updateUser(userFrom.getId(),userFrom.getRemain());
 		userRepository.save(userTo);
 		userRepository.save(userFrom);
 
@@ -245,6 +265,11 @@ public class MainController {
 		return "0";
 	}
 
+	@PostMapping(path = "/sendSuggest")
+	public String sendSuggest(@RequestParam String suggest){
+		log.info("用户发送："+suggest);
+		return "updateMain";
+	}
 
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<User> getAllUsers() {

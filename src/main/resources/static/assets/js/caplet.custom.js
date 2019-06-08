@@ -91,7 +91,7 @@ $(function () {
 
     //////////     TEXTAREA  AUTO SIZE    //////////
     $('textarea[data-height="auto"]').autosize();
-    $(".widget-write-post textarea").limit({limit: 20});
+    $(".widget-write-post textarea").limit({limit: 200});
 
     //////////     SELETE PICKER    //////////
     $('.selectpicker').selectpicker();
@@ -1007,6 +1007,11 @@ $(function () {
         // console.log(this.getAttribute("value"));
         temp.value=this.getAttribute("value");
     });
+
+    $("#submitSuggest").click(function () {
+            $("#suggestForm").submit();
+        }
+    );
 });
     
     

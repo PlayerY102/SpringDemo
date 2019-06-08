@@ -15,6 +15,18 @@ public class User {
 	private String password;
 	private Integer remain;
 
+	public boolean equals(User user) {
+		if(		this.id.equals(user.getId())&&
+				this.name.equals(user.getName())&&
+				this.email.equals(user.getEmail())&&
+				this.password.equals(user.getPassword())&&
+				this.remain.equals(user.getRemain())
+		){
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public String toString() {
 		return "User{" +

@@ -214,14 +214,13 @@
                     <div class="well bg-info">
                         <div class="widget-tile">
                             <section>
-                                <h5><strong>REGISTERED</strong> USERS </h5>
-                                <h2>8,590</h2>
+                                <h5><strong>好友</strong> Friends </h5>
+                                <h2 th:text="${myFriends.size()}"></h2>
                                 <div class="progress progress-xs progress-white progress-over-tile">
                                     <div class="progress-bar  progress-bar-white" aria-valuetransitiongoal="8590"
                                          aria-valuemax="10000"></div>
                                 </div>
-                                <label class="progress-label label-white"> Just 1410 member to limit , <a href="#">Upgrade
-                                    Now</a> </label>
+                                <label class="progress-label label-white"> 可通过右侧边栏的好友项进行操作 <a href="#menu-right">click</a> </label>
                             </section>
                             <div class="hold-icon"><i class="fa fa-bar-chart-o"></i></div>
                         </div>
@@ -231,13 +230,13 @@
                     <div class="well bg-inverse">
                         <div class="widget-tile">
                             <section>
-                                <h5><strong>NEW</strong> ORDER </h5>
-                                <h2>478</h2>
+                                <h5><strong>余额</strong> Balance </h5>
+                                <h2 th:text="${currentUser.remain}"></h2>
                                 <div class="progress progress-xs progress-white progress-over-tile">
                                     <div class="progress-bar  progress-bar-white" aria-valuetransitiongoal="478"
                                          aria-valuemax="1000"></div>
                                 </div>
-                                <label class="progress-label label-white">Up 5% from last month</label>
+                                <label class="progress-label label-white">初始账户有100</label>
                             </section>
                             <div class="hold-icon"><i class="fa fa-shopping-cart"></i></div>
                         </div>
@@ -247,13 +246,13 @@
                     <div class="well bg-theme">
                         <div class="widget-tile">
                             <section>
-                                <h5><strong>PAGES</strong> VIEWER </h5>
-                                <h2>97,584</h2>
+                                <h5><strong>未处理交易申请</strong> Messages </h5>
+                                <h2 th:text="${messages.size()}"></h2>
                                 <div class="progress progress-xs progress-white progress-over-tile">
                                     <div class="progress-bar  progress-bar-white" aria-valuetransitiongoal="97584"
                                          aria-valuemax="300000"></div>
                                 </div>
-                                <label class="progress-label label-white">32.53% of viewer target</label>
+                                <label class="progress-label label-white">可在左侧边栏点击Message Icon查看并操作 <a data-toggle="modal"  href="#md-messages">click</a></label>
                             </section>
                             <div class="hold-icon"><i class="fa fa-laptop"></i></div>
                         </div>
@@ -273,11 +272,11 @@
                             <li class="right animated" data-effect="fadeInLeft">
                                 <section>
                                     <div class="mark bgimg"
-                                         style="background-image: url(assets/photos_preview/300/city/1.jpg)"></div>
+                                         style="background-image: url(assets/img/SpringBoot.png)"></div>
                                     <div class="timeline-content">
                                         <time><i class="fa fa-clock-o"></i>Today ,10:36am</time>
-                                        <h3>基于<strong>区块链</strong></h3>
-                                        <p>这是一个基于区块链的虚拟交易系统，可以提供方便快捷的交易操作并查看历史，同时用区块链保障数据的安全性，难以篡改。</p>
+                                        <h3>后台</h3>
+                                        <p>后台是使用的Java和Spring Boot框架。</p>
                                     </div>
                                 </section>
                             </li>
@@ -304,9 +303,9 @@
                             <li class="left">
                                 <section>
                                     <time><i class="fa fa-clock-o"></i>2 Day ago ,08:49pm</time>
-                                    <h3>后台</h3>
-                                    <p>后台是使用的Java和Spring Boot框架。</p>
-                                    <img alt="" src="assets/photos_preview/700/nature/1.jpg"/>
+                                    <h3>基于<strong>区块链</strong></h3>
+                                    <p>这是一个基于区块链的虚拟交易系统，可以提供方便快捷的交易操作并查看历史，同时用区块链保障数据的安全性，难以篡改。</p>
+                                    <img alt="" src="/assets/img/hyperLedger.png"/>
                                 </section>
                             </li>
                             <li class="right  bd-darkorange">
@@ -337,14 +336,16 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
+                    <form  id="suggestForm" action="/sendSuggest" method="post">
                     <div class="widget-write-post">
+                        <ul>
+                            <li class="active" id="submitSuggest"><i class="fa fa-pencil"></i>  发送 </li>
+                        </ul>
                         <div>
-                            <form>
-                                <textarea class="form-control" placeholder="Write something..."></textarea>
-                            </form>
+                                <textarea name="suggest" class="form-control" placeholder="建议或者意见..."></textarea>
                         </div>
                     </div>
-
+                    </form>
                     <section class="panel">
                         <div class="widget-clock">
                             <div id="clock"></div>
@@ -954,7 +955,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var tar=$("#friendSize").text();
-        $(".myEm").children("em").text(tar)
+        $(".myEm").children("em").text(tar);
     });
 </script>
 </body>

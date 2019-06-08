@@ -275,7 +275,15 @@ $(document).ready(function() {
 						main.removeClass("slideDown")
 					}, e!="0" ? 500 : 3000);
 					if (e=="1") {
-						$.notific8('Email has already been registered !! ', {
+						$.notific8('Email已被占用 !! ', {
+							life: 5000,
+							horizontalEdge: "bottom",
+							theme: "danger",
+							heading: " ERROR :); "
+						});
+						return false;
+					}else if(e=="2"){
+						$.notific8('注册失败 !! ', {
 							life: 5000,
 							horizontalEdge: "bottom",
 							theme: "danger",
