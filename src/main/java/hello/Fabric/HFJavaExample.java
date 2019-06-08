@@ -14,15 +14,9 @@ import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Properties;
-import org.hyperledger.fabric.sdk.ChaincodeID;
-import org.hyperledger.fabric.sdk.Channel;
-import org.hyperledger.fabric.sdk.Enrollment;
-import org.hyperledger.fabric.sdk.HFClient;
-import org.hyperledger.fabric.sdk.Orderer;
-import org.hyperledger.fabric.sdk.Peer;
-import org.hyperledger.fabric.sdk.ProposalResponse;
-import org.hyperledger.fabric.sdk.QueryByChaincodeRequest;
-import org.hyperledger.fabric.sdk.TransactionProposalRequest;
+
+import hello.User;
+import org.hyperledger.fabric.sdk.*;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.hyperledger.fabric.sdk.exception.TransactionException;
@@ -30,6 +24,7 @@ import org.hyperledger.fabric.sdk.security.CryptoSuite;
 import org.hyperledger.fabric.sdk.security.CryptoSuite.Factory;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
 import org.hyperledger.fabric_ca.sdk.RegistrationRequest;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class HFJavaExample {
@@ -38,37 +33,86 @@ public class HFJavaExample {
     private static final Logger log = LoggerFactory.getLogger(HFJavaExample.class);
 
 
+
+    public static void addUserToChain(hello.User user)throws Exception{
+        HFCAClient caClient = getHfCaClient("http://119.3.211.100:7054", null);
+        HFUser admin = getAdmin(caClient);
+        HFClient client = getHfClient();
+        client.setUserContext(admin);
+        Channel channel = getChannel(client);
+        invokeBlockChain(client,"create",user.getId().toString(),user.getName(),user.getRemain().toString(),user.getPassword(),user.getEmail());
+    }
+
+    public static hello.User getUserFromChain(Integer id)throws Exception{
+        HFCAClient caClient = getHfCaClient("http://119.3.211.100:7054", null);
+        HFUser admin = getAdmin(caClient);
+        HFClient client = getHfClient();
+        client.setUserContext(admin);
+        Channel channel = getChannel(client);
+        String response=queryBlockChain(client,"query",id.toString());
+        log.info(response);
+        if(response==null||response.equals("")){
+            return null;
+        }
+        JSONObject jsonObject=new JSONObject(response);
+        hello.User user=new hello.User();
+        user.setId(id);
+        user.setRemain(jsonObject.getInt("remain"));
+        user.setEmail(jsonObject.getString("mail"));
+        user.setName(jsonObject.getString("name"));
+        user.setPassword(jsonObject.getString("password"));
+        return user;
+    }
+
+    public static void updateUser(Integer id,Integer amount)throws Exception{
+        HFCAClient caClient = getHfCaClient("http://119.3.211.100:7054", null);
+        HFUser admin = getAdmin(caClient);
+        HFClient client = getHfClient();
+        client.setUserContext(admin);
+        Channel channel = getChannel(client);
+        invokeBlockChain(client,"update",id.toString(),amount.toString());
+    }
     public static void main(String[] args) throws Exception {
+        hello.User user=new User();
+//        user.setId(1);
+//        user.setPassword("123456");
+//        user.setName("Yang");
+//        user.setEmail("123456@qq.com");
+//        user.setRemain(100);
+//        addUserToChain(user);
+        updateUser(1,90);
+        user=getUserFromChain(1);
+        System.out.println(user);
         // create fabric-ca client
 
-        HFCAClient caClient = getHfCaClient("http://119.3.211.100:7054", null);
 
-        // enroll or load admin
-        HFUser admin = getAdmin(caClient);
-        log.info(admin.toString());
-
-        // register and enroll new user
-       // HFUser hfUser = getUser(caClient, admin, "wesker");
-       // log.info(hfUser.toString());
-
-        // get HFC client instance
-        HFClient client = getHfClient();
-        // set user context
-        client.setUserContext(admin);
-
-        // get HFC channel using the client
-        Channel channel = getChannel(client);
-        log.info("Channel: " + channel.getName());
-
-        // query alll account list
-        queryBlockChain(client, "list");
-
-
-        //update
-        invokeBlockChain(client, "update", "ACCOUNT0", "jill_1");
-
-        // query by condition
-        queryBlockChain(client, "query", "ACCOUNT0");
+//        HFCAClient caClient = getHfCaClient("http://119.3.211.100:7054", null);
+//
+//        // enroll or load admin
+//        HFUser admin = getAdmin(caClient);
+//        log.info(admin.toString());
+//
+//        // register and enroll new user
+//       // HFUser hfUser = getUser(caClient, admin, "wesker");
+//       // log.info(hfUser.toString());
+//
+//        // get HFC client instance
+//        HFClient client = getHfClient();
+//        // set user context
+//        client.setUserContext(admin);
+//
+//        // get HFC channel using the client
+//        Channel channel = getChannel(client);
+//        log.info("Channel: " + channel.getName());
+//
+//        // query alll account list
+//        queryBlockChain(client, "list");
+//
+//        //update
+//        invokeBlockChain(client, "update", "ACCOUNT0", "jill_1");
+//
+//        // query by condition
+//        log.info(queryBlockChain(client, "query", "ACCOUNT0"));
 
 
     }
@@ -108,7 +152,7 @@ public class HFJavaExample {
      * @throws ProposalException
      * @throws InvalidArgumentException
      */
-    static void queryBlockChain(HFClient client, String funcName, String... args) throws ProposalException, InvalidArgumentException {
+    static String queryBlockChain(HFClient client, String funcName, String... args) throws ProposalException, InvalidArgumentException {
         // get channel instance from client
         Channel channel = client.getChannel("mychannel");
         // create chaincode request
@@ -126,8 +170,9 @@ public class HFJavaExample {
         // display response
         for (ProposalResponse pres : res) {
             String stringResponse = new String(pres.getChaincodeActionResponsePayload());
-            log.info(stringResponse);
+            return stringResponse;
         }
+        return null;
     }
 
 
