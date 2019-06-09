@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import hello.Fabric.HFJavaExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +69,7 @@ public class MainController {
 			return "2";//数据库存储失败
 		}
 		user=users.get(0);
-		HFJavaExample.addUserToChain(user); //添加到区块链
+//		HFJavaExample.addUserToChain(user); //添加到区块链
 
 		session.setAttribute("currentUser",user);
 		return "0";//成功注册
@@ -93,17 +92,17 @@ public class MainController {
 			return "1";//用户不存在
 		}
 		User user = users.get(0);
-		try{
-			User userFromChain=HFJavaExample.getUserFromChain(user.getId());
-			if(userFromChain==null){
-				return "4";//区块链没查询到
-			}
-			if(!userFromChain.equals(user)){
-				return "3";//区块链数据与数据库不一致
-			}
-		}catch (Exception e){
-			return "4";//区块链查询错误
-		}
+//		try{
+//			User userFromChain=HFJavaExample.getUserFromChain(user.getId());
+//			if(userFromChain==null){
+//				return "4";//区块链没查询到
+//			}
+//			if(!userFromChain.equals(user)){
+//				return "3";//区块链数据与数据库不一致
+//			}
+//		}catch (Exception e){
+//			return "4";//区块链查询错误
+//		}
 		if (!user.getPassword().equals(password)) {
 			//out.print("<script>alert('密码错误')</script>");
 			return "2";//密码错误
@@ -212,8 +211,8 @@ public class MainController {
 		Transaction transaction=new Transaction(message);
 		transactionRepository.save(transaction);//存储这个交易
 
-		HFJavaExample.updateUser(userTo.getId(),userTo.getRemain());//更新区块链
-		HFJavaExample.updateUser(userFrom.getId(),userFrom.getRemain());
+//		HFJavaExample.updateUser(userTo.getId(),userTo.getRemain());//更新区块链
+//		HFJavaExample.updateUser(userFrom.getId(),userFrom.getRemain());
 		userRepository.save(userTo);//更新数据库
 		userRepository.save(userFrom);
 
