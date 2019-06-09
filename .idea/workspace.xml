@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b5b14932-71a1-43d0-94af-b8e4f83e1fed" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hello/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hello/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hello/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hello/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/img/logo_white.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/img/logo_white.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/img/md-contact.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/img/md-contact.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/assets/js/caplet.custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/assets/js/caplet.custom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hello/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hello/MainController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hello/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hello/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/register.html" afterDir="false" />
-    </list>
+    <list default="true" id="b5b14932-71a1-43d0-94af-b8e4f83e1fed" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -475,12 +461,12 @@
       <workItem from="1559917471385" duration="2299000" />
       <workItem from="1559971942073" duration="10034000" />
       <workItem from="1559991641663" duration="1315000" />
-      <workItem from="1559998956024" duration="6960000" />
+      <workItem from="1559998956024" duration="7619000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="106785000" />
+    <option name="totallyTimeSpent" value="107444000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -493,7 +479,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1716418" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -505,7 +490,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3283582" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27130976" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.27130976" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39966834" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -516,7 +501,7 @@
       <window_info anchor="bottom" id="Java Enterprise" order="10" weight="0.3283582" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32744282" />
-      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4995958" weight="0.9485904" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="13" sideWeight="0.4995958" visible="true" weight="0.9480249" />
       <window_info anchor="bottom" id="Thumbnails" order="14" weight="0.3283582" />
       <window_info anchor="bottom" id="Version Control" order="15" weight="0.3283582" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
