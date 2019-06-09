@@ -3,6 +3,7 @@ package hello;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+//启动SpringBoot
 @SpringBootApplication
 public class Application {
 

@@ -29,26 +29,26 @@ public class MainController {
 	private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserRepository userRepository;//用户表
 	@Autowired
-	private TransactionRepository transactionRepository;
+	private TransactionRepository transactionRepository;//历史交易表
 	@Autowired
-	private FriendRepository friendRepository;
+	private FriendRepository friendRepository;//好友表
 	@Autowired
-	private MessageRepository messageRepository;
+	private MessageRepository messageRepository;//交易申请表
 
-	@GetMapping("/")
+	@GetMapping("/")//直接访问跳转到login.html
 	public String showBegin() {
 		return "login";
 	}
 
-	@GetMapping("/register")
+	@GetMapping("/register")//访问register跳转到register.html
 	public String showRegister(){
 		return "register";
 	}
 
-	@PostMapping(path="/add")
-	@ResponseBody
+	@PostMapping(path="/add")//注册用户的post申请
+	@ResponseBody//返回的是一个状态给网页，让网页进行提示交互
 	public Object addNewUser (@RequestParam String name
 			, @RequestParam String email, @RequestParam String password,HttpServletRequest request,Model model) throws Exception{
 
@@ -73,12 +73,12 @@ public class MainController {
 		HFJavaExample.addUserToChain(user); //添加到区块链
 
 		session.setAttribute("currentUser",user);
-		return "0";
+		return "0";//成功注册
 	}
 
 
-	@PostMapping(path = "/login")
-	@ResponseBody
+	@PostMapping(path = "/login")//登录表单的post
+	@ResponseBody//返回的是一个状态，让网页进行处理
 	public Object login(@RequestParam String email, @RequestParam String password, HttpServletResponse response, HttpServletRequest request,Model model)throws IOException {
 
 		log.info(email+" "+password);
@@ -90,30 +90,30 @@ public class MainController {
 
 		if (users == null||users.size()<=0) {
 			//out.print("<script>alert('该用户不存在')</script>");
-			return "1";
+			return "1";//用户不存在
 		}
 		User user = users.get(0);
 		try{
 			User userFromChain=HFJavaExample.getUserFromChain(user.getId());
 			if(userFromChain==null){
-				return "4";
+				return "4";//区块链没查询到
 			}
 			if(!userFromChain.equals(user)){
-				return "3";
+				return "3";//区块链数据与数据库不一致
 			}
 		}catch (Exception e){
-			return "4";
+			return "4";//区块链查询错误
 		}
 		if (!user.getPassword().equals(password)) {
 			//out.print("<script>alert('密码错误')</script>");
-			return "2";
+			return "2";//密码错误
 		}
 
-		session.setAttribute("currentUser",user);
-		return "0";
+		session.setAttribute("currentUser",user);//将当前用户存入session中
+		return "0";//成功登录
 	}
 
-	@PostMapping(path="/addFriend")
+	@PostMapping(path="/addFriend")//添加好友申请
 	public String addFriend(@RequestParam String friendEmail,Model model,HttpServletResponse response,HttpServletRequest request)throws IOException{
 		HttpSession session=request.getSession();
 		response.setContentType("text/html;charset=utf-8");
@@ -139,7 +139,7 @@ public class MainController {
 	}
 
 
-	@RequestMapping(path="/updateMain")
+	@RequestMapping(path="/updateMain")//刷新界面的申请
 	public String updateMain( Model model,HttpServletResponse response,HttpServletRequest request)throws IOException{
 
 		log.info("into updateMain");
@@ -153,11 +153,11 @@ public class MainController {
 			return "login";
 		}
 		currentUser=userRepository.findById(currentUser.getId().intValue());
-		model.addAttribute("currentUser",currentUser);
+		model.addAttribute("currentUser",currentUser);//刷新用户
 		List<Friend> friends=friendRepository.findByUserA(currentUser.getId());
 		List<Integer> myFriendsInteger=friends.stream().map(Friend::getUserB).collect(Collectors.toList());
 		List<User> myFriendsList=userRepository.findByIdIn(myFriendsInteger);
-		model.addAttribute("myFriends",myFriendsList);
+		model.addAttribute("myFriends",myFriendsList);//存入好友
 
 		List<Transaction> transactionsFrom=transactionRepository.findByUserFrom(currentUser.getId());
 		List<Transaction> transactionsTo=transactionRepository.findByUserTo(currentUser.getId());
@@ -168,7 +168,7 @@ public class MainController {
 			TransactionSend temp=new TransactionSend(i,userRepository);
 			transactionSends.add(temp);
 		}
-		model.addAttribute("transactions",transactionSends);
+		model.addAttribute("transactions",transactionSends);//存入历史交易
 
 		List<Message> messages=messageRepository.findByUserTo(currentUser.getId());
 		List<MessageSend> messageSends=new ArrayList<>();
@@ -176,12 +176,12 @@ public class MainController {
 			MessageSend temp=new MessageSend(i,userRepository);
 			messageSends.add(temp);
 		}
-		model.addAttribute("messages",messageSends);
+		model.addAttribute("messages",messageSends);//存入未处理交易
 
 		return "dashboard";
 	}
 
-	@PostMapping(path = "/addTransaction")
+	@PostMapping(path = "/addTransaction")//交易
 	public String addTransaction(@RequestParam int messageId,HttpServletResponse response,HttpServletRequest request)throws Exception{
 
 		HttpSession session=request.getSession();
@@ -210,17 +210,17 @@ public class MainController {
 		}
 
 		Transaction transaction=new Transaction(message);
-		transactionRepository.save(transaction);
+		transactionRepository.save(transaction);//存储这个交易
 
-		HFJavaExample.updateUser(userTo.getId(),userTo.getRemain());
+		HFJavaExample.updateUser(userTo.getId(),userTo.getRemain());//更新区块链
 		HFJavaExample.updateUser(userFrom.getId(),userFrom.getRemain());
-		userRepository.save(userTo);
+		userRepository.save(userTo);//更新数据库
 		userRepository.save(userFrom);
 
 		return "updateMain";
 	}
 
-	@PostMapping(path="/addMessage")
+	@PostMapping(path="/addMessage")//发送交易申请
 	public String addMessage(@RequestParam String userToEmail,@RequestParam int amount,HttpServletResponse response,HttpServletRequest request)throws IOException{
 		HttpSession session=request.getSession();
 		response.setContentType("text/html;charset=utf-8");
@@ -248,13 +248,13 @@ public class MainController {
 		message.setUserFrom(userFrom.getId());
 		message.setUserTo(userTo.getId());
 
-		messageRepository.save(message);
+		messageRepository.save(message);//存入数据库
 
 		return "updateMain";
 	}
 
 
-	@PostMapping(path="/delMessage")
+	@PostMapping(path="/delMessage")//拒绝、删除交易申请
 	@ResponseBody
 	public Object delMessage(@RequestParam int messageId){
 		Message message=messageRepository.findById(messageId);
@@ -265,14 +265,14 @@ public class MainController {
 		return "0";
 	}
 
-	@PostMapping(path = "/sendSuggest")
+	@PostMapping(path = "/sendSuggest")//发送建议和意见
 	public String sendSuggest(@RequestParam String suggest){
-		log.info("用户发送："+suggest);
+		log.info("用户发送："+suggest);//发入log
 		return "updateMain";
 	}
 
-	@GetMapping(path="/all")
-	public @ResponseBody Iterable<User> getAllUsers() {
-		return userRepository.findAll();
-	}
+//	@GetMapping(path="/all")//用于查看所有用户的信息，开发时用于调试
+//	public @ResponseBody Iterable<User> getAllUsers() {
+//		return userRepository.findAll();
+//	}
 }
